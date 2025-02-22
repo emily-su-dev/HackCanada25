@@ -2,7 +2,8 @@ import cors from "cors";
 import { POST as sendSms } from './app/api/sms/route';
 import { POST as sendCall } from './app/api/call/route';
 import dotenv from 'dotenv';
-import express from "express";
+import express, { Request, Response } from "express";
+import { generateTrackingLink } from './tracking';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -12,6 +13,14 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = 5100;
+
+interface ITracking extends Document {
+  uid: string;
+  email: string;
+  clicked: boolean;
+  timestamp: Date;
+}
+
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from backend!" });
