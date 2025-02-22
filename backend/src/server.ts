@@ -1,6 +1,7 @@
 import cors from "cors";
 import { POST as sendSms } from './app/api/sms/route';
 import { POST as sendCall } from './app/api/call/route';
+import { POST as generatePhishingSms } from './app/api/ai/route';
 import dotenv from 'dotenv';
 import express from "express";
 
@@ -15,6 +16,11 @@ const PORT = 5100;
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from backend!" });
+});
+
+// generate a phishing SMS message
+app.post("/api/ai", async (req, res) => {
+  await generatePhishingSms(req, res);
 });
 
 // send an SMS message
@@ -45,5 +51,5 @@ app.post("/api/call", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  
+
 });
