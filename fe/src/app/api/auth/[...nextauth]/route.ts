@@ -17,7 +17,7 @@ export const authOptions = {
   ],
   callbacks: {
     async redirect({ baseUrl }: { baseUrl: string }) {
-      return `${baseUrl}/`;
+      return `${baseUrl}/Dashboard`;
     },
   },
 };
