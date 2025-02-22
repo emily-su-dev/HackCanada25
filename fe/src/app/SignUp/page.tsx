@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
-import styles from "./SignUp.module.css";
-
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Button, Container, Form } from 'react-bootstrap';
+import styles from './SignUp.module.css';
+import { AuthenticateButton } from '../components/AuthenticateButton';
 
 const SignUp = () => {
   const router = useRouter();
@@ -40,11 +40,15 @@ const SignUp = () => {
         </Form>
 
         <p className={styles.authFooter}>
-          Already have an account?{" "}
-          <span className={styles.authLink} onClick={() => router.push("/SignIn")}>
+          Already have an account?{' '}
+          <span
+            className={styles.authLink}
+            onClick={() => router.push('/SignIn')}
+          >
             Sign in
           </span>
         </p>
+        <AuthenticateButton />
       </Container>
     </div>
   );
