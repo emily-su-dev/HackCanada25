@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import styles from "./SignUp.module.css";
+import { AuthenticateButton } from '../components/AuthenticateButton';
 
 
 const SignUp = () => {
@@ -22,7 +23,7 @@ const SignUp = () => {
   return (
     <div className={styles.authPage}>
       <Container className={styles.authContainer}>
-        <h2 className={styles.authTitle}>Create Account</h2>
+        <h2 className={styles.authTitle}>Create Accounts</h2>
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -44,6 +45,7 @@ const SignUp = () => {
           <span className={styles.authLink} onClick={() => router.push("/signin")}>
             Sign in
           </span>
+          <AuthenticateButton />
         </p>
       </Container>
     </div>
