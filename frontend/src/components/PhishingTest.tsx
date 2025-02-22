@@ -4,12 +4,13 @@ import { generatePhishingCall, generatePhishingSms, sendSms, sendCall } from "..
 const PhishingTest = () => {
     const [employeeName, setEmployeeName] = useState("");
     const [companyName, setCompanyName] = useState("");
+    const [employeePosition, setEmployeePosition] = useState("");
     const [phone, setPhone] = useState("");
     const [SMSmessage, setSMSMessage] = useState("");
-    const [Callmessage, setCallMessage] = useState("");
+    const [callMessage, setCallMessage] = useState("");
 
     const handleGenerateSms = async () => {
-        const phishingText = await generatePhishingSms(employeeName, companyName);
+        const phishingText = await generatePhishingSms(employeeName, companyName, employeePosition);
         if (phishingText) {
             setSMSMessage(phishingText);
         }
@@ -25,15 +26,15 @@ const PhishingTest = () => {
     };
 
     const handleGenerateCall = async () => {
-        const phishingText = await generatePhishingCall(employeeName, companyName);
+        const phishingText = await generatePhishingCall(employeeName, companyName, employeePosition);
         if (phishingText) {
             setCallMessage(phishingText);
         }
     };
 
     const handleSendCall = async () => {
-        if (Callmessage && phone) {
-            const response = await sendCall(phone, Callmessage);
+        if (callMessage && phone) {
+            const response = await sendCall(phone, callMessage);
             if (response) {
                 alert("Call Sent Successfully!");
             }
@@ -55,6 +56,12 @@ const PhishingTest = () => {
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
             />
+            <input
+                type="text"
+                placeholder="Enter employee position"
+                value={employeePosition}
+                onChange={(e) => setEmployeePosition(e.target.value)}
+            />
             <button onClick={handleGenerateSms}>Generate Phishing SMS</button>
 
             {SMSmessage && (
@@ -72,16 +79,16 @@ const PhishingTest = () => {
 
             <button onClick={handleGenerateCall}>Generate Phishing Call Message</button>
 
-            {Callmessage && (
+            {callMessage && (
                 <div>
-                    <p><strong>Generated Call Message:</strong> {Callmessage}</p>
+                    <p><strong>Generated Call Message:</strong> {callMessage}</p>
                     <input
                         type="text"
                         placeholder="Enter phone number"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                     />
-                    <button onClick={handleSendCall}>Send a call</button>
+                    <button onClick={handleSendCall}>Send as call</button>
                 </div>
             )}
         </div>

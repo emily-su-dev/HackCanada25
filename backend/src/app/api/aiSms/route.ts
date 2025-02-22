@@ -12,19 +12,59 @@ export async function POST(request: Request, res: Response) {
         // Parse request data
         const data = request.body;
         console.log("Received data:", data);
-        const { employeeName, companyName } = data;
+        let { employeeName, companyName, employeePosition } = data;
 
-        if (!employeeName || !companyName) {
-            console.error("Missing required parameters.");
-            return res.status(400).json({ error: "Employee name and company name are required." });
+        // Set defaults if values are missing
+        if (!employeeName) {
+            console.error("Missing employee name. Using 'Valued Employee' as fallback.");
+            employeeName = "Valued Employee";
+        }
+
+        if (!companyName) {
+            console.warn("Missing company name. Using 'Your Organization' as fallback.");
+            companyName = null; // Set to null for later prompt selection
+        }
+
+        if (!employeePosition) {
+            console.warn("Missing employee position. Using 'team member' as fallback.");
+            employeePosition = null; // Set to null for later prompt selection
         }
 
         // Generate text using Google Gemini API
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        const prompt = `Generate a realistic SMS message for a security training exercise at ${companyName}.  
-The message should be urgent and encourage ${employeeName} to take action, such as verifying an account or clicking a link (specifically https://${companyName}.ca/verify${employeeName}).  
-It should resemble common security alerts or account notifications, keeping it professional and under 160 characters.`;
+        // Choose the correct prompt based on missing data
+        let prompt = "";
+
+        // Case 1: Only Employee Name is Provided
+        if (!companyName && !employeePosition) {
+            prompt = `Generate a short security alert SMS.  
+                Address the recipient as ${employeeName} and notify them of an urgent security concern.  
+                Keep it vague but professional, under 160 characters.`;
+        }
+
+        // Case 2: Employee Name + Company Name is Provided (but No Position)
+        else if (companyName && !employeePosition) {
+            prompt = `Generate a security alert SMS for ${employeeName} at ${companyName}.  
+                The message should warn about an urgent security issue and request immediate action.  
+                Keep it professional and realistic, under 160 characters.  
+                Use https://${companyName.toLowerCase().replace(/\s+/g, '')}.ca/verify${employeeName.replace(/\s+/g, '')} as the verification link.`;
+        }
+
+        // Case 3: Employee Name + Employee Position is Provided (but No Company)
+        else if (!companyName && employeePosition) {
+            prompt = `Generate a security alert SMS for ${employeeName}, who is a ${employeePosition}.  
+                The message should be urgent and mention a security issue related to their role.  
+                Keep it professional, under 160 characters, and avoid mentioning a specific company.`;
+        }
+
+        // Case 4: All Fields Provided (Full Scam SMS)
+        else {
+            prompt = `Generate a realistic security alert SMS for a training exercise at ${companyName}.  
+                The message should sound like a real security alert and should address ${employeeName}, a ${employeePosition}.  
+                Encourage them to take immediate action by visiting https://${companyName.toLowerCase().replace(/\s+/g, '')}.ca/verify${employeeName.replace(/\s+/g, '')} or calling a support number.  
+                Keep it professional and under 160 characters.`;
+        }
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
