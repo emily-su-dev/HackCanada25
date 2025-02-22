@@ -1,0 +1,58 @@
+.config-page {
+    display: flex;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #4467C4;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    h2{
+        color: black;
+    }
+  }
+  
+  .sidebar-title {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .nav-item {
+    color: black !important;
+    padding: 12px 15px;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: background 0.3s;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .nav-item:hover {
+    background-color: #6ac5fe;
+
+
+    .nav-icon {
+        color: white;
+      }
+  }
+  
+  .nav-icon {
+    color: black;
+  }
+
+  
+  
+  .logout {
+    margin-top: auto;
+    color: #ff4d4d !important;
+  }
+  
