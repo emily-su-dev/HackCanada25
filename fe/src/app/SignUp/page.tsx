@@ -42,7 +42,7 @@ const SignUp = () => {
 
         <p className={styles.authFooter}>
           Already have an account?{" "}
-          <span className={styles.authLink} onClick={() => router.push("/signin")}>
+          <span className={styles.authLink} onClick={() => router.push("/SignIn")}>
             Sign in
           </span>
           <AuthenticateButton />

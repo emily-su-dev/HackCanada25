@@ -1,14 +1,27 @@
+"use client";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import "./SignIn.css";
+import styles from "./SignIn.module.css";
 
 const SignIn = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  // Fix hydration error by ensuring this runs only on the client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent rendering mismatched HTML between server and client
+  if (!mounted) return null;
 
   return (
-    <div className="auth-page">
-      <Container className="auth-container">
-        <h2 className="auth-title">Sign In</h2>
+    <div className={styles.authPage}>
+      <Container className={styles.authContainer}>
+        <h2 className={styles.authTitle}>Sign In</h2>
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -25,9 +38,9 @@ const SignIn = () => {
           </Button>
         </Form>
 
-        <p className="auth-footer mt-3">
+        <p className={styles.authFooter}>
           Don't have an account?{" "}
-          <span className="auth-link" onClick={() => navigate("/signup")}>
+          <span className={styles.authLink} onClick={() => router.push("/SignUp")}>
             Sign up
           </span>
         </p>
