@@ -22,10 +22,12 @@ export async function POST(request: Request, res: Response) {
         // Generate text using Google Gemini API
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        const prompt = `Generate a realistic SMS message for a security training exercise at ${companyName}.  
-The message should be urgent and encourage ${employeeName} to take action, such as verifying an account or clicking a link (specifically https://${companyName}.ca/verify${employeeName}).  
-It should resemble common security alerts or account notifications, keeping it professional and under 160 characters.`;
-
+        const prompt = `You are generating a simulated security awareness training call script for employees at ${companyName}.  
+The script should sound like a **real automated call** from a company representative or security system.  
+Address the recipient as ${employeeName} and inform them of an urgent account-related issue.  
+Encourage them to take immediate action by visiting https://${companyName}.ca/verify${employeeName} or calling a support number.  
+🚨 **Do NOT include stage directions or formatting, just output the spoken message exactly as it should be heard.**  
+Keep the script concise and under 30 seconds.`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -36,6 +38,6 @@ It should resemble common security alerts or account notifications, keeping it p
 
     } catch (error: any) {
         console.error("Error calling Google Gemini API:", error);
-        return res.status(500).json({ error: "Failed to generate phishing SMS" });
+        return res.status(500).json({ error: "Failed to generate phishing Call" });
     }
 }
