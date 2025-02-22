@@ -1,8 +1,8 @@
-import express from "express";
 import cors from "cors";
 import { POST as sendSms } from './app/api/sms/route';
 import { POST as sendCall } from './app/api/call/route';
 import dotenv from 'dotenv';
+import express from "express";
 
 // Load environment variables from .env file
 dotenv.config();
