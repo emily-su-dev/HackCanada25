@@ -18,7 +18,6 @@ const Configuration = () => {
 
   return (
     <div className={styles.configurationPage}>
-      <div className={styles.toolbar}>Configuration</div>
       <Container className={styles.mainContent}>
         <h1>Configuration</h1>
         <p>Set up your phishing simulation settings here.</p>

@@ -1,8 +1,8 @@
 .sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #4467C4;
-  color: white;
+  background-color: #dddddd;
+  color: black;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -12,6 +12,7 @@
 }
 
 .sidebarTitle {
+  padding-top: 30px;
   font-size: 22px;
   font-weight: bold;
   text-align: center;
@@ -33,13 +34,13 @@
 
 /* Hover Effect */
 .navItem:hover {
-  background-color: #6ac5fe;
+  background-color: #4467C4;
   color: white !important;
 }
 
 /* Active Page Effect */
 .navItem.active {
-  background-color: #6ac5fe; /* Light blue background for active item */
+  background-color: #4467C4; /* Light blue background for active item */
   color: white !important; /* Ensure text color is white when active */
 }
 

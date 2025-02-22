@@ -25,7 +25,7 @@ const Sidebar = () => {
 
   return (
     <div className={styles.sidebar}>
-      <h2 className={styles.sidebarTitle}>PhishPerception</h2>
+      <h2 className={styles.sidebarTitle}>Sinker</h2>
       <Nav className="flex-column">
         <Nav.Link
           className={`${styles.navItem} ${activeLink("/Dashboard")}`}
