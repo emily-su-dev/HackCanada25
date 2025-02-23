@@ -146,12 +146,21 @@ const InfoBox = () => {
 
       // generate api
       const result = await response.json();
+
+      // send alert
       let requestBody;
       if (type === 'email') {
         requestBody = {
           message: result.message,
           subject: 'Alert!',
           email: employeeEmail,
+          employeeId: employeeId,
+        };
+      } else if (type === 'sms') {
+        requestBody = {
+          body: result.message,
+          to: employeePhone,
+          employeeId: employeeId,
         };
       } else {
         requestBody = {
@@ -168,12 +177,14 @@ const InfoBox = () => {
         body: JSON.stringify(requestBody),
       });
 
-      // get id from email
-      const getResponse = await fetch(`/api/account/email/${employeeEmail}`, {
+      const getUser = await fetch(`/api/employee/${employeeId}`, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-      const getData = await getResponse.json();
-      console.log('Account found:', getData.id);
+
+      const getData = await getUser.json();
 
       let updateBody;
       if (type === 'email') {
@@ -190,7 +201,7 @@ const InfoBox = () => {
         };
       }
 
-      await fetch(`/api/employee/${getData.id}`, {
+      await fetch(`/api/employee/${employeeId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
