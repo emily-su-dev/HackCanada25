@@ -38,6 +38,10 @@ const InfoBox = () => {
   const [name, setEmployeeName] = useState<string>('');
   const [position, setEmployeePosition] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [companyName, setCompanyName] = useState<string>('');
+  const [companyDescription, setCompanyDescription] = useState<string>('');
+
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   const [accountId, setAccountId] = useState<string | null>(null); // state to store accountId
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -50,7 +54,7 @@ const InfoBox = () => {
       const fetchAccountId = async () => {
         try {
           const getResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/email/${session?.user?.email}`,
+            `/api/account/email/${session?.user?.email}`,
             { method: 'GET' }
           );
           const getData = await getResponse.json();
@@ -112,6 +116,7 @@ const InfoBox = () => {
 
       const result = await response.json();
       console.log('Success:', result);
+      setRefresh(!refresh);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -130,15 +135,17 @@ const InfoBox = () => {
       let apiCall;
       if (type === 'call') {
         apiCall = 'aiCall';
-      } else {
+      } else if (type === 'sms') {
         apiCall = 'aiSms';
+      } else {
+        apiCall = 'aiEmail';
       }
       const response = await fetch(`/api/${apiCall}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ employeeName, employeePosition }),
+        body: JSON.stringify({ employeeName, employeePosition, companyName }),
       });
 
       if (!response.ok) {
@@ -211,6 +218,7 @@ const InfoBox = () => {
       });
 
       console.log(`Success: ${type} alert sent`);
+      setRefresh(!refresh);
     } catch (error) {
       console.error(`Error sending ${type} alert:`, error);
     }
@@ -220,6 +228,36 @@ const InfoBox = () => {
     return total > 0 ? ((fails / total) * 100).toFixed(2) + '%' : '0%';
   };
 
+  const updateAccount = async () => {
+    if (!accountId) return;
+
+    const data = { companyName };
+    try {
+      const response = await fetch(`/api/account/${accountId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update account');
+      }
+
+      const result = await response.json();
+      console.log('Account updated:', result);
+    } catch (error) {
+      console.error('Error updating account:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (companyName) {
+      updateAccount();
+    }
+  }, [companyName]);
+
   return (
     <div className="grid grid-cols-1 md:grid-rows-2 gap-6">
       <Card>
@@ -227,31 +265,32 @@ const InfoBox = () => {
           <h1 className={styles.cardTitle}>About the Company</h1>
           <Box display="flex" flexDirection="row" gap={2}>
             <div>
-                <p>Company Name</p>
-                <TextField
-                  label="My Company"
-                  variant="outlined"
-                  value={email}
-                />
+              <p>Company Name</p>
+              <TextField
+                label="My Company"
+                variant="outlined"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+              />
             </div>
 
             <div>
-                <p>Company Description</p>
-                <TextField
-                  label="My Company is a..."
-                  variant="outlined"
-                  value={email}
-                />
+              <p>Company Description</p>
+              <TextField
+                label="My Company is a..."
+                variant="outlined"
+                value={companyDescription}
+                onChange={(e) => setCompanyDescription(e.target.value)}
+              />
             </div>
 
             <Button variant="contained" color="primary" onClick={handleSubmit}>
               Enter
             </Button>
-          </Box>          
-
+          </Box>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <h1 className={styles.cardTitle}>Add Employees</h1>
@@ -266,41 +305,40 @@ const InfoBox = () => {
                 onChange={(e) => setEmployeeEmail(e.target.value)}
               />
             </div>
-            
+
             <div>
               <p>Employee Name</p>
               <TextField
-              label="Jessica Doe"
-              variant="outlined"
-              value={name}
-              onChange={(e) => setEmployeeName(e.target.value)}
+                label="Jessica Doe"
+                variant="outlined"
+                value={name}
+                onChange={(e) => setEmployeeName(e.target.value)}
               />
             </div>
 
             <div>
               <p>Employee Position</p>
               <TextField
-              label="Senior Director of Finance"
-              variant="outlined"
-              value={position}
-              onChange={(e) => setEmployeePosition(e.target.value)}
+                label="Senior Director of Finance"
+                variant="outlined"
+                value={position}
+                onChange={(e) => setEmployeePosition(e.target.value)}
               />
             </div>
 
             <div>
               <p>Optional: Phone Number</p>
               <TextField
-              label="+14675550000"
-              variant="outlined"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+                label="+14675550000"
+                variant="outlined"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
-          
+
             <Button variant="contained" color="primary" onClick={handleSubmit}>
               Submit
             </Button>
-            
           </Box>
         </CardContent>
       </Card>
