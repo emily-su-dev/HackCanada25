@@ -3,14 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader } from '@mui/material';
 import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from 'recharts';
-import {
   AlertTriangle,
   CheckCircle,
   PhoneCall,
@@ -19,6 +11,8 @@ import {
   Percent,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import PieChartComponent from '../components/PieChartComponent';
+import BarChartComponent from '../components/BarChartComponent';
 
 const Dashboard = () => {
   const [mounted, setMounted] = useState(false);
@@ -30,10 +24,19 @@ const Dashboard = () => {
     smsFailRate: 0,
     callFailRate: 0,
     pieData: [],
+    distributionData: [],
   });
 
-  // Colors for the pie chart
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const COLORS = [
+    '#003f5c',
+    '#2f4b7c',
+    '#465881',
+    '#5a678e',
+    '#6e769b',
+    '#8285a8',
+    '#9695b5',
+    '#aaa4c2',
+  ];
 
   const { data: session } = useSession();
 
@@ -133,12 +136,32 @@ const Dashboard = () => {
         { name: 'Call Fails', value: totalCallFails },
       ];
 
+      // Calculate individual employee fail rates and create distribution
+      const employeeFailRates = accountData.map((emp) => {
+        const totalTests = (emp.numSmsLogs || 0) + (emp.numCallLogs || 0);
+        const totalFails = (emp.numSmsFails || 0) + (emp.numCallFails || 0);
+        return totalTests > 0 ? (totalFails / totalTests) * 100 : 0;
+      });
+
+      // Create distribution buckets (0-10%, 10-20%, etc.)
+      const distribution = new Array(10).fill(0);
+      employeeFailRates.forEach((rate) => {
+        const bucketIndex = Math.min(Math.floor(rate / 10), 9);
+        distribution[bucketIndex]++;
+      });
+
+      const distributionData = distribution.map((count, index) => ({
+        range: `${index * 10}-${(index + 1) * 10}%`,
+        count: count,
+      }));
+
       setStats({
         totalEmployees,
         totalTests: totalSmsTests + totalCallTests,
         smsFailRate,
         callFailRate,
         pieData,
+        distributionData,
       });
     }
   }, [accountData]);
@@ -191,38 +214,27 @@ const Dashboard = () => {
         />
       </div>
 
-      <Card className="mt-8">
-        <CardHeader>
-          <h2 className="text-xl font-semibold">Test Results Distribution</h2>
-        </CardHeader>
-        <CardContent className="h-80">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={stats.pieData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) =>
-                  `${name} (${(percent * 100).toFixed(0)}%)`
-                }
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {stats.pieData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="mt-8">
+          <CardHeader>
+            <h2 className="text-xl font-semibold">Test Results Distribution</h2>
+          </CardHeader>
+          <CardContent className="h-80">
+            <PieChartComponent data={stats.pieData} colors={COLORS} />
+          </CardContent>
+        </Card>
+
+        <Card className="mt-8">
+          <CardHeader>
+            <h2 className="text-xl font-semibold">
+              Employee Fail Rate Distribution
+            </h2>
+          </CardHeader>
+          <CardContent className="h-80">
+            <BarChartComponent data={stats.distributionData} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
