@@ -31,6 +31,8 @@
   align-items: center; /* Vertically center text */
   justify-content: center; /* Horizontally center text and icon */
   gap: 10px;
+
+  flex-direction: row;
 }
 
 
