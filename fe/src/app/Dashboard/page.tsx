@@ -13,6 +13,7 @@ import {
 import { useSession } from 'next-auth/react';
 import PieChartComponent from '../components/PieChartComponent';
 import BarChartComponent from '../components/BarChartComponent';
+import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
   const [mounted, setMounted] = useState(false);
@@ -185,7 +186,7 @@ const Dashboard = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold mb-8">Security Awareness Dashboard</h1>
+      <h1 className={styles.dashboardTitle}>Security Awareness Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard

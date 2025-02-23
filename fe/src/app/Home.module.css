@@ -9,6 +9,15 @@
   }
 }
 
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 .logo {
   transition: transform 3s ease-in-out;
 }
@@ -18,6 +27,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.text {
+  color:whitesmoke;
+  margin-bottom: 20px;
+  animation: fadeIn 1.5s ease-in forwards;
 }
 
 .home {
@@ -49,14 +64,13 @@
 .homeTitle {
   color:aliceblue;
   opacity: 0; /* Start invisible */
-  animation: fadeIn 2s ease-in forwards;
-  
+  animation: fadeIn 1.5s ease-in forwards;
 }
 
 .homeSubtitle {
   color:rgb(123, 150, 173);
   opacity: 0; /* Start invisible */
-  animation: fadeIn 2s ease-in forwards;
+  animation: fadeIn 1.5s ease-in forwards;
   animation-delay: 1s; /* Delay start by 1 second */
 }
 
@@ -71,6 +85,7 @@
 }
 
 .google {
+  margin-top: 10px;
   font-size: 18px;
   font-weight: 500;
   border-radius: 8px;

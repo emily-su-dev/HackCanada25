@@ -16,6 +16,7 @@
   justify-content: center; /* Center panels horizontally */
   align-items: center;
   color: white;
+  font-weight: 500;
 }
 
 /* Row for panels - make sure it's horizontally scrollable */
