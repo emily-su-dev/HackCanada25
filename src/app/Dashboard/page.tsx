@@ -14,6 +14,7 @@ import { useSession } from 'next-auth/react';
 import { Session } from 'next-auth';
 import PieChartComponent from '../components/PieChartComponent';
 import BarChartComponent from '../components/BarChartComponent';
+import styles from './Dashboard.module.css';
 
 interface CustomSession extends Session {
   user: {
@@ -219,9 +220,6 @@ const Dashboard = () => {
     }
   }, [accountData]);
 
-  // Prevent hydration issues
-  if (!mounted) return null;
-
   const StatCard: React.FC<StatCardProps> = ({
     title,
     value,
@@ -241,63 +239,76 @@ const Dashboard = () => {
     </Card>
   );
 
+  // Prevent hydration issues
+  if (!mounted) return null;
+
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold mb-8">Security Awareness Dashboard</h1>
+    <div className={styles.dashboardContainer}>
+      <div>
+        <div className={styles.dashboardTitleContainer}>
+          <h1 className={styles.dashboardTitle}>
+            Security Awareness Dashboard
+          </h1>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        <StatCard
-          title="Total Employees"
-          value={stats.totalEmployees}
-          icon={Users}
-          color="blue"
-        />
-        <StatCard
-          title="Total Tests"
-          value={stats.totalTests}
-          icon={AlertTriangle}
-          color="purple"
-        />
-        <StatCard
-          title="SMS Fail Rate"
-          value={`${stats.smsFailRate}%`}
-          icon={MessageSquare}
-          color="red"
-        />
-        <StatCard
-          title="Call Fail Rate"
-          value={`${stats.callFailRate}%`}
-          icon={PhoneCall}
-          color="orange"
-        />
-        <StatCard
-          title="Email Fail Rate"
-          value={`${stats.emailFailRate}%`}
-          icon={Mail}
-          color="green"
-        />
-      </div>
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <StatCard
+              title="Total Employees"
+              value={stats.totalEmployees}
+              icon={Users}
+              color="blue"
+            />
+            <StatCard
+              title="Total Tests"
+              value={stats.totalTests}
+              icon={AlertTriangle}
+              color="purple"
+            />
+            <StatCard
+              title="SMS Fail Rate"
+              value={`${stats.smsFailRate}%`}
+              icon={MessageSquare}
+              color="red"
+            />
+            <StatCard
+              title="Call Fail Rate"
+              value={`${stats.callFailRate}%`}
+              icon={PhoneCall}
+              color="orange"
+            />
+            <StatCard
+              title="Email Fail Rate"
+              value={`${stats.emailFailRate}%`}
+              icon={Mail}
+              color="green"
+            />
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="mt-8">
-          <CardHeader>
-            <h2 className="text-xl font-semibold">Test Results Distribution</h2>
-          </CardHeader>
-          <CardContent className="h-80">
-            <PieChartComponent data={stats.pieData} colors={COLORS} />
-          </CardContent>
-        </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="mt-8">
+              <CardHeader>
+                <h2 className="text-xl font-semibold">
+                  Test Results Distribution
+                </h2>
+              </CardHeader>
+              <CardContent className="h-80">
+                <PieChartComponent data={stats.pieData} colors={COLORS} />
+              </CardContent>
+            </Card>
 
-        <Card className="mt-8">
-          <CardHeader>
-            <h2 className="text-xl font-semibold">
-              Employee Fail Rate Distribution
-            </h2>
-          </CardHeader>
-          <CardContent className="h-80">
-            <BarChartComponent data={stats.distributionData} />
-          </CardContent>
-        </Card>
+            <Card className="mt-8">
+              <CardHeader>
+                <h2 className="text-xl font-semibold">
+                  Employee Fail Rate Distribution
+                </h2>
+              </CardHeader>
+              <CardContent className="h-80">
+                <BarChartComponent data={stats.distributionData} />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

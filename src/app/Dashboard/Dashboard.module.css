@@ -1,14 +1,14 @@
 /* Full-page container */
-.dashboardPage {
+.dashboardContainer {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: linear-gradient(to bottom, #4467C4, #2A4E9B); /* Light blue background for everything */
+  background: linear-gradient(to bottom, #4467C4, #031a4b); 
   padding-top: 30px;
+  padding: 20px;
   max-width: 100%;
   overflow-x: hidden;
 }
-
 
 .dashboardTitle {
   display: flex;
@@ -16,6 +16,14 @@
   justify-content: center; /* Center panels horizontally */
   align-items: center;
   color: white;
+  font-weight: 700;
+  font-size: 3em;
+  margin: 20px;
+  margin-bottom: 50px;
+}
+
+.dashboardTitleContainer {
+  text-align: left;
 }
 
 /* Row for panels - make sure it's horizontally scrollable */
