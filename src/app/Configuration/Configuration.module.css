@@ -3,14 +3,11 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: linear-gradient(
-    to bottom,
-    #4467c4,
-    #2a4e9b
-  ); /* Light blue background for everything */
+  background: linear-gradient(to bottom, #4467C4, #031a4b); 
   padding-top: 30px;
   max-width: 100%;
   overflow-x: hidden;
+  padding: 20px;
 }
 
 .configurationTitle {
@@ -19,4 +16,8 @@
   justify-content: center; /* Center panels horizontally */
   align-items: center;
   color: white;
+  font-weight: 700;
+  font-size: 3em;
+  margin: 20px;
+  margin-bottom: 50px;
 }

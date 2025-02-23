@@ -18,9 +18,12 @@ const Configuration = () => {
 
   return (
     <div className={styles.configurationPage}>
-      <div className={styles.configurationTitle}>
-        <InfoBox />
+      <div>
+        <h1 className={styles.configurationTitle}>
+          Employee Information Configuration
+        </h1>
       </div>
+      <InfoBox />
     </div>
   );
 };
