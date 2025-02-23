@@ -1,7 +1,7 @@
 .sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #dddddd;
+  background-color: #e9ebf8;
   color: black;
   display: flex;
   flex-direction: column;
@@ -15,6 +15,15 @@
   font-size: 30px;
   font-weight: bold;
   text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.sidebarTitleContainer {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 80px;
 }
 
@@ -69,4 +78,15 @@
 
 .logout {
   color: black !important;
+}
+
+.logo {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
