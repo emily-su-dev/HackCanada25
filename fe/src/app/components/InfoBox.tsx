@@ -1,13 +1,38 @@
 import { Box, Button, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 
 const InfoBox = () => {
-  const [employeeName, setEmployeeName] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [employeePosition, setEmployeePosition] = useState('');
+  const [email, setEmployeeEmail] = useState('');
+  const [name, setEmployeeName] = useState('');
+  const [position, setEmployeePosition] = useState('');
+  const [accountId, setAccountId] = useState(null); // state to store accountId
+
+  const { data: session } = useSession();
+  console.log(session);
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      const fetchAccountId = async () => {
+        try {
+          const getResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/email/${session.user.email}`,
+            { method: 'GET' }
+          );
+          const getData = await getResponse.json();
+          console.log('Account found:', getData.id);
+          setAccountId(getData.id);
+        } catch (error) {
+          console.error('Error checking or creating account:', error);
+        }
+      };
+
+      fetchAccountId();
+    }
+  }, [session]);
 
   const handleSubmit = async () => {
-    const data = { employeeName, companyName, employeePosition };
+    const data = { email, name, position, accountId };
     try {
       const response = await fetch('/api/employee', {
         method: 'POST',
@@ -35,21 +60,21 @@ const InfoBox = () => {
       </h1>
       <Box display="flex" flexDirection="row" gap={2} p={2}>
         <TextField
-          label="Employee Name"
+          label="Employee Email"
           variant="outlined"
-          value={employeeName}
-          onChange={(e) => setEmployeeName(e.target.value)}
+          value={email}
+          onChange={(e) => setEmployeeEmail(e.target.value)}
         />
         <TextField
-          label="Company Name"
+          label="Employee Name"
           variant="outlined"
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
+          value={name}
+          onChange={(e) => setEmployeeName(e.target.value)}
         />
         <TextField
           label="Employee Position"
           variant="outlined"
-          value={employeePosition}
+          value={position}
           onChange={(e) => setEmployeePosition(e.target.value)}
         />
         <Button variant="contained" color="primary" onClick={handleSubmit}>
