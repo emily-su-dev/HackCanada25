@@ -45,7 +45,7 @@ const Dashboard = () => {
   });
 
   const COLORS = [
-    '#94b5e6', 
+    '#94b5e6',
     '#284c82',
     '#95c6c6',
     '#003f5c',
@@ -247,7 +247,7 @@ const Dashboard = () => {
       <div>
         <div className={styles.dashboardTitleContainer}>
           <h1 className={styles.dashboardTitle}>
-            Cybersecurity Awareness Dashboard
+            Cybersecurity Testing Dashboard
           </h1>
         </div>
 

@@ -31,15 +31,9 @@ const Home = () => {
           />
         </div>
 
-        <h1
-          className={styles.sinkerTitle}
-        >
-          Sinker
-        </h1>
+        <h1 className={styles.sinkerTitle}>Sinker</h1>
 
-        <h1 className={styles.homeTitle}>
-          Cybersecurity Awareness Training
-        </h1>
+        <h1 className={styles.homeTitle}>Cybersecurity Awareness Training</h1>
         <p className={styles.homeSubtitle}>
           Prevent phishing for once and for all.
         </p>
