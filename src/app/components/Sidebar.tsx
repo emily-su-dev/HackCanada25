@@ -5,7 +5,8 @@ import { LayoutDashboard, LogOut, Settings } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Nav } from 'react-bootstrap';
-import styles from './Sidebar.module.css'; // Your styles
+import styles from './Sidebar.module.css';
+import Image from "next/image";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -25,7 +26,18 @@ const Sidebar = () => {
 
   return (
     <div className={styles.sidebar}>
-      <h2 className={styles.sidebarTitle}>Sinker</h2>
+      <div className={styles.sidebarTitleContainer}>
+        <h2 className={styles.sidebarTitle}>Sinker</h2>
+
+        <Image
+          src="/assets/sinkerLogoDark.png"
+          alt="Sinker Logo"
+          className={styles.logo} 
+          width={60}
+          height={60}
+        /> 
+      </div>
+        
       <Nav className="flex-column">
         <Nav.Link
           className={`${styles.navItem} ${activeLink('/Dashboard')}`}

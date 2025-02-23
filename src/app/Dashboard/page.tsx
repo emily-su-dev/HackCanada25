@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader } from '@mui/material';
 import {
   AlertTriangle,
-  CheckCircle,
+  Mail,
   PhoneCall,
   MessageSquare,
   Users,
@@ -14,6 +14,7 @@ import { useSession } from 'next-auth/react';
 import { Session } from 'next-auth';
 import PieChartComponent from '../components/PieChartComponent';
 import BarChartComponent from '../components/BarChartComponent';
+import styles from './Dashboard.module.css';
 
 interface CustomSession extends Session {
   user: {
@@ -38,6 +39,7 @@ const Dashboard = () => {
     totalTests: 0,
     smsFailRate: 0,
     callFailRate: 0,
+    emailFailRate: 0,
     pieData: [] as Array<{ name: string; value: number }>,
     distributionData: [] as Array<{ range: string; count: number }>,
   });
@@ -130,6 +132,11 @@ const Dashboard = () => {
           sum + (emp.numCallLogs || 0),
         0
       );
+      const totalEmailTests = accountData.reduce(
+        (sum: number, emp: { numEmailLogs?: number }) =>
+          sum + (emp.numEmailLogs || 0),
+        0
+      );
       const totalSmsFails = accountData.reduce(
         (sum: number, emp: { numSmsFails?: number }) =>
           sum + (emp.numSmsFails || 0),
@@ -140,6 +147,11 @@ const Dashboard = () => {
           sum + (emp.numCallFails || 0),
         0
       );
+      const totalEmailFails = accountData.reduce(
+        (sum: number, emp: { numEmailFails?: number }) =>
+          sum + (emp.numEmailFails || 0),
+        0
+      );
 
       // Calculate fail rates
       const smsFailRate = totalSmsTests
@@ -148,6 +160,9 @@ const Dashboard = () => {
       const callFailRate = totalCallTests
         ? ((totalCallFails / totalCallTests) * 100).toFixed(1)
         : 0;
+      const emailFailRate = totalEmailTests
+        ? ((totalEmailFails / totalEmailTests) * 100).toFixed(1)
+        : 0;
 
       // Prepare data for pie chart
       const pieData = [
@@ -155,6 +170,8 @@ const Dashboard = () => {
         { name: 'SMS Fails', value: totalSmsFails },
         { name: 'Call Passes', value: totalCallTests - totalCallFails },
         { name: 'Call Fails', value: totalCallFails },
+        { name: 'Email Passes', value: totalEmailTests - totalEmailFails },
+        { name: 'Email Fails', value: totalEmailFails },
       ];
 
       // Calculate individual employee fail rates and create distribution
@@ -162,11 +179,19 @@ const Dashboard = () => {
         (emp: {
           numSmsLogs?: number;
           numCallLogs?: number;
+          numEmailLogs?: number;
           numSmsFails?: number;
           numCallFails?: number;
+          numEmailFails?: number;
         }) => {
-          const totalTests = (emp.numSmsLogs || 0) + (emp.numCallLogs || 0);
-          const totalFails = (emp.numSmsFails || 0) + (emp.numCallFails || 0);
+          const totalTests =
+            (emp.numSmsLogs || 0) +
+            (emp.numCallLogs || 0) +
+            (emp.numEmailLogs || 0);
+          const totalFails =
+            (emp.numSmsFails || 0) +
+            (emp.numCallFails || 0) +
+            (emp.numEmailFails || 0);
           return totalTests > 0 ? (totalFails / totalTests) * 100 : 0;
         }
       );
@@ -185,17 +210,15 @@ const Dashboard = () => {
 
       setStats({
         totalEmployees,
-        totalTests: totalSmsTests + totalCallTests,
+        totalTests: totalSmsTests + totalCallTests + totalEmailTests,
         smsFailRate: parseFloat(smsFailRate as string),
         callFailRate: parseFloat(callFailRate as string),
+        emailFailRate: parseFloat(emailFailRate as string),
         pieData,
         distributionData,
       });
     }
   }, [accountData]);
-
-  // Prevent hydration issues
-  if (!mounted) return null;
 
   const StatCard: React.FC<StatCardProps> = ({
     title,
@@ -216,57 +239,76 @@ const Dashboard = () => {
     </Card>
   );
 
+  // Prevent hydration issues
+  if (!mounted) return null;
+
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold mb-8">Security Awareness Dashboard</h1>
+    <div className={styles.dashboardContainer}>
+      <div>
+        <div className={styles.dashboardTitleContainer}>
+          <h1 className={styles.dashboardTitle}>
+            Security Awareness Dashboard
+          </h1>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title="Total Employees"
-          value={stats.totalEmployees}
-          icon={Users}
-          color="blue"
-        />
-        <StatCard
-          title="Total Tests"
-          value={stats.totalTests}
-          icon={AlertTriangle}
-          color="purple"
-        />
-        <StatCard
-          title="SMS Fail Rate"
-          value={`${stats.smsFailRate}%`}
-          icon={MessageSquare}
-          color="red"
-        />
-        <StatCard
-          title="Call Fail Rate"
-          value={`${stats.callFailRate}%`}
-          icon={PhoneCall}
-          color="orange"
-        />
-      </div>
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <StatCard
+              title="Total Employees"
+              value={stats.totalEmployees}
+              icon={Users}
+              color="blue"
+            />
+            <StatCard
+              title="Total Tests"
+              value={stats.totalTests}
+              icon={AlertTriangle}
+              color="purple"
+            />
+            <StatCard
+              title="SMS Fail Rate"
+              value={`${stats.smsFailRate}%`}
+              icon={MessageSquare}
+              color="red"
+            />
+            <StatCard
+              title="Call Fail Rate"
+              value={`${stats.callFailRate}%`}
+              icon={PhoneCall}
+              color="orange"
+            />
+            <StatCard
+              title="Email Fail Rate"
+              value={`${stats.emailFailRate}%`}
+              icon={Mail}
+              color="green"
+            />
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="mt-8">
-          <CardHeader>
-            <h2 className="text-xl font-semibold">Test Results Distribution</h2>
-          </CardHeader>
-          <CardContent className="h-80">
-            <PieChartComponent data={stats.pieData} colors={COLORS} />
-          </CardContent>
-        </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="mt-8">
+              <CardHeader>
+                <h2 className="text-xl font-semibold">
+                  Test Results Distribution
+                </h2>
+              </CardHeader>
+              <CardContent className="h-80">
+                <PieChartComponent data={stats.pieData} colors={COLORS} />
+              </CardContent>
+            </Card>
 
-        <Card className="mt-8">
-          <CardHeader>
-            <h2 className="text-xl font-semibold">
-              Employee Fail Rate Distribution
-            </h2>
-          </CardHeader>
-          <CardContent className="h-80">
-            <BarChartComponent data={stats.distributionData} />
-          </CardContent>
-        </Card>
+            <Card className="mt-8">
+              <CardHeader>
+                <h2 className="text-xl font-semibold">
+                  Employee Fail Rate Distribution
+                </h2>
+              </CardHeader>
+              <CardContent className="h-80">
+                <BarChartComponent data={stats.distributionData} />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

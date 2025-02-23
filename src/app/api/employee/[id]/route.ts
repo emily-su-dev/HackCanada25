@@ -20,8 +20,10 @@ export async function PATCH(request: Request) {
       position,
       numSmsFails,
       numCallFails,
+      numEmailFails,
       numSmsLogs,
       numCallLogs,
+      numEmailLogs,
     } = data;
 
     // create a new dictionary with any non-undefined data (to be updated)
@@ -30,8 +32,10 @@ export async function PATCH(request: Request) {
     if (position !== undefined) updateData.position = position;
     if (numSmsFails !== undefined) updateData.numSmsFails = numSmsFails;
     if (numCallFails !== undefined) updateData.numCallFails = numCallFails;
+    if (numEmailFails !== undefined) updateData.numEmailFails = numEmailFails;
     if (numSmsLogs !== undefined) updateData.numSmsLogs = numSmsLogs;
     if (numCallLogs !== undefined) updateData.numCallLogs = numCallLogs;
+    if (numEmailLogs !== undefined) updateData.numEmailLogs = numEmailLogs;
 
     // update data
     const updatedEmployee = await prisma.account.update({

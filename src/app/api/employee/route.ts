@@ -4,7 +4,7 @@ import prisma from '../../../../utils/prisma-client';
 // create a new user
 export async function POST(request: Request) {
   const data = await request.json();
-  const { email, name, position, accountId } = data;
+  const { email, name, position, accountId, phoneNumber } = data;
 
   const newUser = await prisma.employee.create({
     data: {
@@ -12,6 +12,7 @@ export async function POST(request: Request) {
       name,
       position,
       accountId,
+      phoneNumber,
     },
   });
 

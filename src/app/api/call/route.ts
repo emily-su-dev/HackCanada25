@@ -22,17 +22,29 @@ export async function POST(request: NextRequest) {
     const twiml = new twilio.twiml.VoiceResponse();
     twiml.say(body);
 
-    // send call, return sid
-    client.calls
-      .create({
+    try {
+      // send call, return sid
+      const call = await client.calls.create({
         from: '+16183284945',
         to: to,
         twiml: twiml.toString(),
-      })
-      .then((call: { sid: string }) => console.log(call.sid));
+      });
+      console.log(call.sid);
+      return NextResponse.json({ success: true, sid: call.sid });
+    } catch (error) {
+      console.error('Error making call:', error);
+      return NextResponse.json({
+        success: false,
+        error: (error as Error).message,
+      });
+    }
   } else {
     console.error(
       'You are missing one of the variables you need to make a call'
     );
+    return NextResponse.json({
+      success: false,
+      error: 'Missing required variables',
+    });
   }
 }
