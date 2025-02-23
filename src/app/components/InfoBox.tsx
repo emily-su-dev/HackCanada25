@@ -11,7 +11,11 @@ import {
   TableHead,
   TableRow,
   TextField,
+  IconButton,
 } from '@mui/material';
+import CallIcon from '@mui/icons-material/Call';
+import SmsIcon from '@mui/icons-material/Sms';
+import EmailIcon from '@mui/icons-material/Email';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
@@ -104,6 +108,57 @@ const InfoBox = () => {
     }
   };
 
+  const handleSendAlert = async (
+    employeeId: string,
+    employeeEmail: string,
+    employeePhone: string,
+    employeeName: string,
+    employeePosition: string,
+    type: string
+  ) => {
+    try {
+      const response = await fetch(`/api/${type}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ employeeName, employeePosition }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to send ${type} alert`);
+      }
+
+      const result = await response.json();
+      let requestBody;
+      if (type === 'email') {
+        requestBody = {
+          body: result,
+          subject: 'Alert!',
+          to: employeeEmail,
+        };
+      } else {
+        requestBody = {
+          body: result,
+          to: employeePhone,
+        };
+      }
+
+      const send = await fetch(`/api/${type}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+      const alertResult = await response.json();
+
+      console.log(`Success: ${type} alert sent`, alertResult);
+    } catch (error) {
+      console.error(`Error sending ${type} alert:`, error);
+    }
+  };
+
   return (
     <div>
       <h1>Insert Employees</h1>
@@ -143,6 +198,7 @@ const InfoBox = () => {
               <TableCell>Failed Call Tests</TableCell>
               <TableCell>Total SMS Received</TableCell>
               <TableCell>Total Calls Received</TableCell>
+              <TableCell>Send Alert</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -156,11 +212,55 @@ const InfoBox = () => {
                   <TableCell>{employee.numCallFails}</TableCell>
                   <TableCell>{employee.numSmsLogs}</TableCell>
                   <TableCell>{employee.numCallLogs}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      onClick={() =>
+                        handleSendAlert(
+                          employee.id,
+                          employee.email,
+                          employee.phone,
+                          employee.name,
+                          employee.position,
+                          'call'
+                        )
+                      }
+                    >
+                      <CallIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={() =>
+                        handleSendAlert(
+                          employee.id,
+                          employee.email,
+                          employee.phone,
+                          employee.name,
+                          employee.position,
+                          'sms'
+                        )
+                      }
+                    >
+                      <SmsIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={() =>
+                        handleSendAlert(
+                          employee.id,
+                          employee.email,
+                          employee.phone,
+                          employee.name,
+                          employee.position,
+                          'email'
+                        )
+                      }
+                    >
+                      <EmailIcon />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={7}>No employees available</TableCell>
+                <TableCell colSpan={8}>No employees available</TableCell>
               </TableRow>
             )}
           </TableBody>
