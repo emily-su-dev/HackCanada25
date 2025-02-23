@@ -18,11 +18,11 @@ const PieChartComponent: React.FC<PieChartComponentProps> = ({
   colors,
 }) => (
   <ResponsiveContainer width="100%" height="100%">
-    <PieChart margin={{ top: 60, right: 20, bottom: 20, left: 20 }}>
-      <Pie
+    <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+      <Pie 
         data={data}
         cx="50%"
-        cy="20%"
+        cy="50%"
         labelLine={false}
         label={({ name, percent }) =>
           `${name} (${(percent * 100).toFixed(0)}%)`
