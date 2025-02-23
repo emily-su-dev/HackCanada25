@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Box,
   Button,
@@ -39,7 +41,7 @@ const InfoBox = () => {
       const fetchAccountId = async () => {
         try {
           const getResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/email/${session.user.email}`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/email/${session?.user?.email}`,
             { method: 'GET' }
           );
           const getData = await getResponse.json();
@@ -158,7 +160,7 @@ const InfoBox = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={3}>No employees available</TableCell>
+                <TableCell colSpan={7}>No employees available</TableCell>
               </TableRow>
             )}
           </TableBody>
