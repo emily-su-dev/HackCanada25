@@ -284,9 +284,16 @@ const InfoBox = () => {
               />
             </div>
 
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              Enter
-            </Button>
+            <div className={styles.btnContainer}>
+              <Button
+                className={styles.btnSubmit}
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+              >
+                Enter
+              </Button>
+            </div>
           </Box>
         </CardContent>
       </Card>
@@ -296,9 +303,10 @@ const InfoBox = () => {
           <h1 className={styles.cardTitle}>Add Employees</h1>
 
           <Box display="flex" flexDirection="row" gap={2}>
-            <div>
-              <p>Employee Email</p>
+            <div className={styles.workerEmail}>
+              <p className={styles.cardSub}>Employee Email</p>
               <TextField
+                className={styles.tf}
                 label="example@gmail.com"
                 variant="outlined"
                 value={email}
@@ -306,9 +314,10 @@ const InfoBox = () => {
               />
             </div>
 
-            <div>
-              <p>Employee Name</p>
+            <div className={styles.workerName}>
+              <p className={styles.cardSub}>Employee Name</p>
               <TextField
+                className={styles.tf}
                 label="Jessica Doe"
                 variant="outlined"
                 value={name}
@@ -316,9 +325,10 @@ const InfoBox = () => {
               />
             </div>
 
-            <div>
-              <p>Employee Position</p>
+            <div className={styles.workerJob}>
+              <p className={styles.cardSubOpt}>Optional: Employee Position</p>
               <TextField
+                className={styles.tf}
                 label="Senior Director of Finance"
                 variant="outlined"
                 value={position}
@@ -326,9 +336,10 @@ const InfoBox = () => {
               />
             </div>
 
-            <div>
-              <p>Optional: Phone Number</p>
+            <div className={styles.workerPhone}>
+              <p className={styles.cardSubOpt}>Optional: Phone Number</p>
               <TextField
+                className={styles.tf}
                 label="+14675550000"
                 variant="outlined"
                 value={phoneNumber}
@@ -336,9 +347,16 @@ const InfoBox = () => {
               />
             </div>
 
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              Submit
-            </Button>
+            <div className={styles.btnContainer}>
+              <Button
+                className={styles.btnSubmit}
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </div>
           </Box>
         </CardContent>
       </Card>

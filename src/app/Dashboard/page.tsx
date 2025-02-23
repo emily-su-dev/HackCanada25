@@ -247,7 +247,7 @@ const Dashboard = () => {
       <div>
         <div className={styles.dashboardTitleContainer}>
           <h1 className={styles.dashboardTitle}>
-            Security Awareness Dashboard
+            Cybersecurity Awareness Dashboard
           </h1>
         </div>
 
