@@ -2,6 +2,7 @@
 
 import { signIn } from 'next-auth/react';
 import { FC } from 'react';
+import styles from "../Home.module.css";
 
 export const AuthenticateButton: FC = () => {
   const handleGoogleSignIn = async () => {
@@ -11,7 +12,7 @@ export const AuthenticateButton: FC = () => {
   return (
     <div className="relative overflow-hidden ">
       <button
-        className="w-full flex items-center justify-center gap-2"
+        className={styles.google}
         onClick={handleGoogleSignIn}
       >
         <span>Login with Google</span>
