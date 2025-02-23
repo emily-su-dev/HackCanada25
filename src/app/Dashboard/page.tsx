@@ -11,20 +11,28 @@ import {
   Percent,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import { Session } from 'next-auth';
 import PieChartComponent from '../components/PieChartComponent';
 import BarChartComponent from '../components/BarChartComponent';
 
+interface CustomSession extends Session {
+  user: {
+    email: string;
+    id: string;
+  };
+}
+
 const Dashboard = () => {
   const [mounted, setMounted] = useState(false);
-  const [accountId, setAccountId] = useState(null);
-  const [accountData, setAccountData] = useState(null);
+  const [accountId, setAccountId] = useState<string | null>(null);
+  const [accountData, setAccountData] = useState<any>(null);
   const [stats, setStats] = useState({
     totalEmployees: 0,
     totalTests: 0,
     smsFailRate: 0,
     callFailRate: 0,
-    pieData: [],
-    distributionData: [],
+    pieData: [] as Array<{ name: string; value: number }>,
+    distributionData: [] as Array<{ range: string; count: number }>,
   });
 
   const COLORS = [
@@ -44,11 +52,11 @@ const Dashboard = () => {
   useEffect(() => {
     setMounted(true);
 
-    if (session?.user?.email) {
+    if (session && session.user && session.user.email) {
       const fetchAccountId = async () => {
         try {
           const getResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/email/${session.user.email}`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/email/${(session as unknown as CustomSession).user.email}`,
             { method: 'GET' }
           );
           const getData = await getResponse.json();
@@ -63,7 +71,9 @@ const Dashboard = () => {
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: session.user.email }),
+                body: JSON.stringify({
+                  email: (session as CustomSession).user.email,
+                }),
               }
             );
             const postData = await postResponse.json();
@@ -158,8 +168,8 @@ const Dashboard = () => {
       setStats({
         totalEmployees,
         totalTests: totalSmsTests + totalCallTests,
-        smsFailRate,
-        callFailRate,
+        smsFailRate: parseFloat(smsFailRate as string),
+        callFailRate: parseFloat(callFailRate as string),
         pieData,
         distributionData,
       });
@@ -240,3 +250,13 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+function generatePieData(
+  arrayLength: number
+): { name: string; value: number }[] {
+  return [
+    { name: 'SMS Passes', value: Math.floor(arrayLength / 4) },
+    { name: 'SMS Fails', value: Math.floor(arrayLength / 4) },
+    { name: 'Call Passes', value: Math.floor(arrayLength / 4) },
+    { name: 'Call Fails', value: Math.floor(arrayLength / 4) },
+  ];
+}

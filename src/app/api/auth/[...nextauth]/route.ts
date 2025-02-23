@@ -18,8 +18,8 @@ const authOptions = {
   callbacks: {
     async session({ session, token }) {
       if (session.user) {
-        session.user.email = token.email; // Attach email to session
-        session.user.id = token.accountId; // Attach user ID to session
+        session.user.email = token.email ?? null; // Attach email to session
+        session.user.id = token.accountId ?? null; // Attach user ID to session
       }
       return session;
     },
