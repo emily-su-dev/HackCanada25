@@ -211,46 +211,92 @@ const InfoBox = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-rows-2 gap-6">
-      <Card className="mt-8 p-0">
-        <CardHeader className="p-4">
-          <h1 className={styles.normalText}>Insert Employees</h1>
-        </CardHeader>
-        <CardContent className="p-4">
+      <Card>
+        <CardContent>
+          <h1 className={styles.cardTitle}>About the Company</h1>
           <Box display="flex" flexDirection="row" gap={2}>
-            <TextField
-              label="Employee Email"
-              variant="outlined"
-              value={email}
-              onChange={(e) => setEmployeeEmail(e.target.value)}
-            />
-            <TextField
-              label="Employee Name"
+            <div>
+                <p>Company Name</p>
+                <TextField
+                  label="My Company"
+                  variant="outlined"
+                  value={email}
+                />
+            </div>
+
+            <div>
+                <p>Company Description</p>
+                <TextField
+                  label="My Company is a..."
+                  variant="outlined"
+                  value={email}
+                />
+            </div>
+
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
+              Enter
+            </Button>
+          </Box>          
+
+        </CardContent>
+      </Card>
+      
+      <Card>
+        <CardContent className="p-4">
+          <h1 className={styles.cardTitle}>Add Employees</h1>
+
+          <Box display="flex" flexDirection="row" gap={2}>
+            <div>
+              <p>Employee Email</p>
+              <TextField
+                label="example@gmail.com"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmployeeEmail(e.target.value)}
+              />
+            </div>
+            
+            <div>
+              <p>Employee Name</p>
+              <TextField
+              label="Jessica Doe"
               variant="outlined"
               value={name}
               onChange={(e) => setEmployeeName(e.target.value)}
-            />
-            <TextField
-              label="Employee Position"
+              />
+            </div>
+
+            <div>
+              <p>Employee Position</p>
+              <TextField
+              label="Senior Director of Finance"
               variant="outlined"
               value={position}
               onChange={(e) => setEmployeePosition(e.target.value)}
-            />
-            <TextField
-              label="Phone Number"
+              />
+            </div>
+
+            <div>
+              <p>Optional: Phone Number</p>
+              <TextField
+              label="+14675550000"
               variant="outlined"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-            />
+              />
+            </div>
+          
             <Button variant="contained" color="primary" onClick={handleSubmit}>
               Submit
             </Button>
+            
           </Box>
         </CardContent>
       </Card>
 
       <Card>
         <CardContent>
-          <h1>Employee Data </h1>
+          <h1 className={styles.cardTitle}>Employee Data </h1>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
