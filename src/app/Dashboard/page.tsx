@@ -114,19 +114,23 @@ const Dashboard = () => {
       // Calculate overall statistics
       const totalEmployees = accountData.length;
       const totalSmsTests = accountData.reduce(
-        (sum, emp) => sum + (emp.numSmsLogs || 0),
+        (sum: number, emp: { numSmsLogs?: number }) =>
+          sum + (emp.numSmsLogs || 0),
         0
       );
       const totalCallTests = accountData.reduce(
-        (sum, emp) => sum + (emp.numCallLogs || 0),
+        (sum: number, emp: { numCallLogs?: number }) =>
+          sum + (emp.numCallLogs || 0),
         0
       );
       const totalSmsFails = accountData.reduce(
-        (sum, emp) => sum + (emp.numSmsFails || 0),
+        (sum: number, emp: { numSmsFails?: number }) =>
+          sum + (emp.numSmsFails || 0),
         0
       );
       const totalCallFails = accountData.reduce(
-        (sum, emp) => sum + (emp.numCallFails || 0),
+        (sum: number, emp: { numCallFails?: number }) =>
+          sum + (emp.numCallFails || 0),
         0
       );
 
@@ -147,15 +151,22 @@ const Dashboard = () => {
       ];
 
       // Calculate individual employee fail rates and create distribution
-      const employeeFailRates = accountData.map((emp) => {
-        const totalTests = (emp.numSmsLogs || 0) + (emp.numCallLogs || 0);
-        const totalFails = (emp.numSmsFails || 0) + (emp.numCallFails || 0);
-        return totalTests > 0 ? (totalFails / totalTests) * 100 : 0;
-      });
+      const employeeFailRates = accountData.map(
+        (emp: {
+          numSmsLogs?: number;
+          numCallLogs?: number;
+          numSmsFails?: number;
+          numCallFails?: number;
+        }) => {
+          const totalTests = (emp.numSmsLogs || 0) + (emp.numCallLogs || 0);
+          const totalFails = (emp.numSmsFails || 0) + (emp.numCallFails || 0);
+          return totalTests > 0 ? (totalFails / totalTests) * 100 : 0;
+        }
+      );
 
       // Create distribution buckets (0-10%, 10-20%, etc.)
       const distribution = new Array(10).fill(0);
-      employeeFailRates.forEach((rate) => {
+      employeeFailRates.forEach((rate: number) => {
         const bucketIndex = Math.min(Math.floor(rate / 10), 9);
         distribution[bucketIndex]++;
       });
@@ -250,13 +261,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-function generatePieData(
-  arrayLength: number
-): { name: string; value: number }[] {
-  return [
-    { name: 'SMS Passes', value: Math.floor(arrayLength / 4) },
-    { name: 'SMS Fails', value: Math.floor(arrayLength / 4) },
-    { name: 'Call Passes', value: Math.floor(arrayLength / 4) },
-    { name: 'Call Fails', value: Math.floor(arrayLength / 4) },
-  ];
-}
