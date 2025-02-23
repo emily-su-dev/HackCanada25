@@ -9,8 +9,6 @@
   overflow-x: hidden;
 }
 
-
-
 .dashboardTitle {
   display: flex;
   flex-direction: row;
@@ -97,4 +95,8 @@
 .arrowBtnRight {
   right: 70px; /* Position right arrow button */
   top: 200px; /* Match the top position of the panel row */
+}
+
+.sidebar .row {
+  margin-bottom: 10px; /* Adjust as needed */
 }

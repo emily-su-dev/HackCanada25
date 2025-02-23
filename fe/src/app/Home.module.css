@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.logo {
+  transition: transform 3s ease-in-out;
+}
+
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .home {
   display: flex;
   align-items: center;
@@ -7,8 +27,37 @@
   height: 100vh;
   position: relative;
   color: black;
+  background: linear-gradient(to bottom, #47b0f5, #00274d, black);
   font-family: 'Poppins', sans-serif;
   text-align: center;
+}
+
+.sinkerTitle {
+  cursor: pointer; /* Show that it's clickable */
+  transition: transform 3s ease-in-out;
+  font-size: 5em;
+  color: aliceblue;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+.movedUp {
+  transform: translateY(-40px); /* Move up by 20px */
+}
+
+
+.homeTitle {
+  color:aliceblue;
+  opacity: 0; /* Start invisible */
+  animation: fadeIn 2s ease-in forwards;
+  
+}
+
+.homeSubtitle {
+  color:rgb(123, 150, 173);
+  opacity: 0; /* Start invisible */
+  animation: fadeIn 2s ease-in forwards;
+  animation-delay: 1s; /* Delay start by 1 second */
 }
 
 .homeContainer {
@@ -21,33 +70,19 @@
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.createAccountBtn {
-  width: 100%;
+.google {
   font-size: 18px;
   font-weight: 500;
-  padding: 12px;
   border-radius: 8px;
   transition: 0.3s;
+  width: full;
+  flex: items-center;
+  color: aliceblue;
+  background-color:#0d6efd;
+  padding: 10px 20px;
 }
 
-.createAccountBtn:hover {
+.google:hover {
   background-color: #0d6efd;
   opacity: 0.9;
 }
-
-.signinText {
-  font-size: 14px;
-  font-weight: 300;
-}
-
-.signinLink {
-  color: #0d6efd;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.signinLink:hover {
-  text-decoration: underline;
-}
-
-
