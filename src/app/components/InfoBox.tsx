@@ -172,6 +172,10 @@ const InfoBox = () => {
     }
   };
 
+  const calculatePercentage = (fails: number, total: number) => {
+    return total > 0 ? ((fails / total) * 100).toFixed(2) + '%' : '0%';
+  };
+
   return (
     <div>
       <Card className="mt-8">
@@ -218,12 +222,9 @@ const InfoBox = () => {
                   <TableCell>Employee Email</TableCell>
                   <TableCell>Employee Name</TableCell>
                   <TableCell>Employee Position</TableCell>
-                  <TableCell>Failed SMS Tests</TableCell>
-                  <TableCell>Failed Call Tests</TableCell>
-                  <TableCell>Total SMS Received</TableCell>
-                  <TableCell>Total Calls Received</TableCell>
-                  <TableCell>Failed Email Tests</TableCell>
-                  <TableCell>Total Emails Received</TableCell>
+                  <TableCell>SMS Fail Percentage</TableCell>
+                  <TableCell>Call Fail Percentage</TableCell>
+                  <TableCell>Email Fail Percentage</TableCell>
                   <TableCell>Send Alert</TableCell>
                 </TableRow>
               </TableHead>
@@ -234,12 +235,24 @@ const InfoBox = () => {
                       <TableCell>{employee.email}</TableCell>
                       <TableCell>{employee.name}</TableCell>
                       <TableCell>{employee.position}</TableCell>
-                      <TableCell>{employee.numSmsFails}</TableCell>
-                      <TableCell>{employee.numCallFails}</TableCell>
-                      <TableCell>{employee.numSmsLogs}</TableCell>
-                      <TableCell>{employee.numCallLogs}</TableCell>
-                      <TableCell>{employee.numEmailFail}</TableCell>
-                      <TableCell>{employee.numEmailLogs}</TableCell>
+                      <TableCell>
+                        {calculatePercentage(
+                          employee.numSmsFails,
+                          employee.numSmsLogs
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {calculatePercentage(
+                          employee.numCallFails,
+                          employee.numCallLogs
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {calculatePercentage(
+                          employee.numEmailFail,
+                          employee.numEmailLogs
+                        )}
+                      </TableCell>
                       <TableCell>
                         <IconButton
                           onClick={() =>
@@ -288,7 +301,7 @@ const InfoBox = () => {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={10}>No employees available</TableCell>
+                    <TableCell colSpan={7}>No employees available</TableCell>
                   </TableRow>
                 )}
               </TableBody>
