@@ -1,6 +1,54 @@
-
 .cardTitle {
+    font-size: 2em;
     color: rgb(38, 26, 94) !important;
     margin-bottom: 20px;
 }
+
+.cardSub {
+    color:rgb(6, 15, 43);
+}
+
+.cardSubOpt {
+    color:rgb(145, 143, 155);
+}
+
+.btnSubmit {
+    height: 56px;
+    display: flex;
+    align-items: center; /* Ensure vertical centering */
+}
   
+.btnContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 2.5em;
+    width: 20%;
+}
+
+.tf {
+    width: 100%;
+}
+
+.companyName {
+    width: 30%;
+}
+
+.companyDesc {
+    width: 50%;
+}
+
+.workerEmail {
+    width: 30%;
+}
+
+.workerName {
+    width: 20%;
+}
+
+.workerJob {
+    width: 30%;
+}
+
+.workerPhone {
+    width: 20%;
+}
