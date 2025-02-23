@@ -16,21 +16,23 @@
   font-size: 22px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 80px;
 }
 
 .navItem {
   color: black !important;
   padding: 12px 15px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
+  height: 100px;
   width: 100%;
   transition: background 0.3s, color 0.3s;
   font-size: 25px;
   display: flex;
-  align-items: center;
+  align-items: center; /* Vertically center text */
+  justify-content: center; /* Horizontally center text and icon */
   gap: 10px;
-  
 }
+
 
 /* Hover Effect */
 .navItem:hover {

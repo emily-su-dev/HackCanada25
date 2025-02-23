@@ -1,30 +1,39 @@
 /* Full-page container */
 .dashboardPage {
-    display: flex;
-    height: 100vh;
-    overflow-x: hidden;
-    background-color: #4467C4; /* Light blue background for everything */
-  }
-  
-  
-  /* Main content */
-  .mainContent {
-    flex-grow: 1;
-    background-color: #4467C4; /* Light blue */
-    color: white;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Row for panels */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(to bottom, #4467C4, #2A4E9B); /* Light blue background for everything */
+  padding-top: 30px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+
+.dashboardTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Center panels horizontally */
+  align-items: center;
+  color: white;
+}
+
+/* Row for panels - make sure it's horizontally scrollable */
 .panelRow {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  flex-direction: row; /* Align panels horizontally */
+  justify-content: center; /* Center panels horizontally */
+  position: absolute; /* Ensure the panels stay aligned with buttons */
+  top: 150px; /* Align with the position of the arrow buttons */
   width: 100%;
+
+  max-width: calc(100% - 250px);
+  overflow-x: auto; /* Horizontal scroll */
+  gap: 20px; /* Space between the panels */
+  scroll-behavior: smooth; /* Smooth scroll effect */
+  padding: 0 10px; /* Prevent panels from touching the edges */
+  align-items: center; /* Vertically center the panels */
 }
 
 /* Panel styles */
@@ -33,14 +42,17 @@
   color: black;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Black shadow */
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15), 
+  0px 5px 10px rgba(0, 0, 0, 0.1);  
   text-align: center;
-  width: 300px;
-  transition: box-shadow 0.3s ease;
+  width: 300px; /* Static width for panels */
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Added smooth transform */
 }
 
 .panel:hover {
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.25), 
+  0px 8px 15px rgba(0, 0, 0, 0.15);  
+  transform: translateY(-5px); /* Lift effect on hover */
 }
 
 .panel h3 {
@@ -52,17 +64,37 @@
   font-size: 14px;
 }
 
-.load-more-btn {
-  background-color: #4467C4;
+/* Arrow Button */
+.arrowBtn {
+  background-color: #000000;
   color: white;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 18px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50%;
   cursor: pointer;
-  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  transform: translateY(-50%);
 }
 
-.load-more-btn:hover {
+.arrowBtn:hover {
   background-color: #6ac5fe;
+}
+
+.arrowBtn svg {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.arrowBtnLeft {
+  left: 320px; /* Position left arrow button to the right of the sidebar */
+  top: 200px; /* Match the top position of the panel row */
+}
+
+.arrowBtnRight {
+  right: 70px; /* Position right arrow button */
+  top: 200px; /* Match the top position of the panel row */
 }

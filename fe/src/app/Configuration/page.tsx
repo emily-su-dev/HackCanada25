@@ -2,7 +2,6 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
 import styles from "./Configuration.module.css"; // Make sure to create this file
 
 const Configuration = () => {
@@ -18,10 +17,10 @@ const Configuration = () => {
 
   return (
     <div className={styles.configurationPage}>
-      <Container className={styles.mainContent}>
-        <h1>Configuration</h1>
-        <p>Set up your phishing simulation settings here.</p>
-      </Container>
+      <div className = {styles.configurationTitle}>
+            <h1>Configuration</h1>
+        </div>
+
     </div>
   );
 };
