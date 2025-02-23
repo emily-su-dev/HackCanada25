@@ -39,22 +39,21 @@ export async function POST(req: NextRequest) {
     if (!companyName && !employeePosition) {
       prompt = `Generate a short security alert call script.  
                 Address the recipient as ${employeeName} and notify them of an urgent security concern.  
-                Keep it vague but professional, under 30 seconds.`;
+                Keep it vague but professional, under 30 seconds. Ask recipient to call back at +16183284945`;
     } else if (companyName && !employeePosition) {
       prompt = `Generate a security alert call script for ${employeeName} at ${companyName}.  
                 The call should warn about an urgent security issue and request immediate action.  
                 Keep it professional and realistic, under 30 seconds.  
-                Use https://${companyName.toLowerCase().replace(/\s+/g, '')}.ca/verify${employeeName.replace(/\s+/g, '')} as the verification link.`;
+                Ask recipient to call back at +16183284945`;
     } else if (!companyName && employeePosition) {
       prompt = `Generate a security alert call script for ${employeeName}, who is a ${employeePosition}.  
                 The call should be urgent and mention a security issue related to their role.  
-                Keep it professional, under 30 seconds, and avoid mentioning a specific company.`;
+                Keep it professional, under 30 seconds, and avoid mentioning a specific company.  Ask recipient to call back at +16183284945`;
     } else {
       prompt = `You are generating a simulated security awareness training call script for employees at ${companyName}.  
                 The script should sound like a **real automated call** from a company representative or security system.  
                 Address the recipient as ${employeeName}, a ${employeePosition}, and inform them of an urgent account-related issue.  
-                Encourage them to take immediate action by visiting https://${companyName.toLowerCase().replace(/\s+/g, '')}.ca/verify${employeeName.replace(/\s+/g, '')} or calling a support number.  
-                🚨 **Do NOT include stage directions or formatting, just output the spoken message exactly as it should be heard.**  
+                Encourage them to take immediate action by calling back at +16183284945.
                 Keep the script concise and under 30 seconds.`;
     }
 
