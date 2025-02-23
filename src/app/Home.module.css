@@ -18,12 +18,17 @@
   }
 }
 
-.movedUp {
-  transform: translateY(-40px); /* Move up by 20px */
+@keyframes moveUpAnimation {
+  from {
+    transform: translateY(-150px); /* Start px above */
+  }
+  to {
+    transform: translateY(0); /* Move to original position */
+  }
 }
 
 .logo {
-  transition: transform 3s ease-in-out;
+  animation: moveUpAnimation 3s ease-in-out;
 }
 
 .logoContainer {
@@ -45,8 +50,7 @@
 }
 
 .sinkerTitle {
-  cursor: pointer; /* Show that it's clickable */
-  transition: transform 3s ease-in-out;
+  animation: moveUpAnimation 3s ease-in-out;
   font-size: 5em;
   color: aliceblue;
   font-weight: 800;
