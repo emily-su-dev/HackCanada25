@@ -291,6 +291,7 @@ const InfoBox = () => {
                 className={styles.btnSubmit}
                 variant="contained"
                 color="primary"
+                sx={{ backgroundColor: '#4467C4' }}
                 onClick={handleSubmit}
               >
                 Enter
@@ -354,6 +355,7 @@ const InfoBox = () => {
                 className={styles.btnSubmit}
                 variant="contained"
                 color="primary"
+                sx={{ backgroundColor: '#4467C4' }}
                 onClick={handleSubmit}
               >
                 Submit
