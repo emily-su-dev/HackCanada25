@@ -1,0 +1,21 @@
+/* Full-page container */
+.page-container {
+  display: flex;
+  height: 100vh;
+  background-color: #4467C4; /* Light blue background for everything */
+  overflow-x: hidden;
+
+}
+
+/* Main content */
+.mainContent {
+  flex-grow: 1;
+  background-color: #4467C4; /* Light blue */
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
