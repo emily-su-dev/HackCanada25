@@ -263,10 +263,11 @@ const InfoBox = () => {
       <Card>
         <CardContent>
           <h1 className={styles.cardTitle}>About the Company</h1>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <div>
-              <p>Company Name</p>
+          <Box display="flex" flexDirection="row" gap={2} width="100%">
+            <div className={styles.companyName}>
+              <p className={styles.cardSubOpt}>Optional: Company Name</p>
               <TextField
+                className={styles.tf}
                 label="My Company"
                 variant="outlined"
                 value={companyName}
@@ -274,9 +275,10 @@ const InfoBox = () => {
               />
             </div>
 
-            <div>
-              <p>Company Description</p>
+            <div className={styles.companyDesc}>
+              <p className={styles.cardSubOpt}>Optional: Company Desription</p>
               <TextField
+                className={styles.tf}
                 label="My Company is a..."
                 variant="outlined"
                 value={companyDescription}
@@ -302,7 +304,7 @@ const InfoBox = () => {
         <CardContent className="p-4">
           <h1 className={styles.cardTitle}>Add Employees</h1>
 
-          <Box display="flex" flexDirection="row" gap={2}>
+          <Box display="flex" flexDirection="row" gap={2} width="100%">
             <div className={styles.workerEmail}>
               <p className={styles.cardSub}>Employee Email</p>
               <TextField
