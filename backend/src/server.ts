@@ -1,6 +1,8 @@
 import cors from "cors";
 import { POST as sendSms } from './app/api/sms/route';
 import { POST as sendCall } from './app/api/call/route';
+import { POST as generatePhishingSms } from './app/api/aiSms/route';
+import { POST as generatePhishingCall } from './app/api/aiCall/route';
 import dotenv from 'dotenv';
 import express, { Request, Response } from "express";
 import { generateTrackingLink } from './tracking';
@@ -24,6 +26,16 @@ interface ITracking extends Document {
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from backend!" });
+});
+
+// generate a phishing call message
+app.post("/api/aiCall", async (req, res) => {
+  await generatePhishingCall(req, res);
+});
+
+// generate a phishing SMS mesage
+app.post("/api/aiSms", async (req, res) => {
+  await generatePhishingSms(req, res);
 });
 
 // send an SMS message
@@ -54,5 +66,5 @@ app.post("/api/call", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  
+
 });

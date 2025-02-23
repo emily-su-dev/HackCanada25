@@ -1,0 +1,20 @@
+/* Full-page container */
+.configurationPage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(to bottom, #4467C4, #2A4E9B); /* Light blue background for everything */
+  padding-top: 30px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+.configurationTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Center panels horizontally */
+  align-items: center;
+  color: white;
+}
+
