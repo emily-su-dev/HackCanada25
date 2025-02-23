@@ -43,7 +43,7 @@ const BarChartComponent: React.FC<BarChartComponentProps> = ({ data }) => (
         {data.map((entry, index) => (
           <Cell
             key={`cell-${index}`}
-            fill={`rgb(${Math.min(255, index * 25)}, 100, 255)`}
+            fill={`#416aa8`}
           />
         ))}
       </Bar>
