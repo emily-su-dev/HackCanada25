@@ -15,12 +15,23 @@ export async function PATCH(request: Request) {
     // retrieve data from request
     const data = await request.json();
     console.log('Received data:', data.stack);
-    const { name, position } = data;
+    const {
+      name,
+      position,
+      numSmsFails,
+      numCallFails,
+      numSmsLogs,
+      numCallLogs,
+    } = data;
 
     // create a new dictionary with any non-undefined data (to be updated)
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
     if (position !== undefined) updateData.position = position;
+    if (numSmsFails !== undefined) updateData.numSmsFails = numSmsFails;
+    if (numCallFails !== undefined) updateData.numCallFails = numCallFails;
+    if (numSmsLogs !== undefined) updateData.numSmsLogs = numSmsLogs;
+    if (numCallLogs !== undefined) updateData.numCallLogs = numCallLogs;
 
     // update data
     const updatedEmployee = await prisma.account.update({
