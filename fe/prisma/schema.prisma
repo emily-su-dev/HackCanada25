@@ -24,6 +24,10 @@ model Employee {
   email String @unique
   name String ?
   position String ?
+  numSmsFails Int ? @default(0)
+  numCallFails Int ? @default(0)
+  numSmsLogs Int ? @default(0)
+  numCallLogs Int ? @default(0)
 
   // hook account
   accountId Int
