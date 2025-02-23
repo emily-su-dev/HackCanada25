@@ -26,7 +26,7 @@ interface Employee {
   phoneNumber: string;
   numSmsFails: number;
   numCallFails: number;
-  numEmailFail: number;
+  numEmailFails: number;
   numSmsLogs: number;
   numCallLogs: number;
   numEmailLogs: number;
@@ -125,6 +125,7 @@ const InfoBox = () => {
     type: string
   ) => {
     try {
+      // generate message
       let apiCall;
       if (type === 'call') {
         apiCall = 'aiCall';
@@ -143,6 +144,7 @@ const InfoBox = () => {
         throw new Error(`Failed to send ${type} alert`);
       }
 
+      // generate api
       const result = await response.json();
       let requestBody;
       if (type === 'email') {
@@ -166,6 +168,36 @@ const InfoBox = () => {
         body: JSON.stringify(requestBody),
       });
 
+      // get id from email
+      const getResponse = await fetch(`/api/account/email/${employeeEmail}`, {
+        method: 'GET',
+      });
+      const getData = await getResponse.json();
+      console.log('Account found:', getData.id);
+
+      let updateBody;
+      if (type === 'email') {
+        updateBody = {
+          numEmailLogs: getData.numEmailLogs + 1,
+        };
+      } else if (type === 'call') {
+        updateBody = {
+          numCallLogs: getData.numCallLogs + 1,
+        };
+      } else {
+        updateBody = {
+          numSmsLogs: getData.numSmsLogs + 1,
+        };
+      }
+
+      await fetch(`/api/employee/${getData.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateBody),
+      });
+
       console.log(`Success: ${type} alert sent`);
     } catch (error) {
       console.error(`Error sending ${type} alert:`, error);
@@ -177,13 +209,13 @@ const InfoBox = () => {
   };
 
   return (
-    <div>
-      <Card className="mt-8">
-        <CardHeader>
-          <h2 className="text-xl font-semibold">Insert Employees</h2>
+    <div className="grid grid-cols-1 md:grid-rows-2 gap-6">
+      <Card className="mt-8 p-0">
+        <CardHeader className="p-4">
+          <h1>Insert Employees</h1>
         </CardHeader>
-        <CardContent className="h-80">
-          <Box display="flex" flexDirection="row" gap={2} p={2}>
+        <CardContent className="p-4">
+          <Box display="flex" flexDirection="row" gap={2}>
             <TextField
               label="Employee Email"
               variant="outlined"
@@ -213,6 +245,9 @@ const InfoBox = () => {
             </Button>
           </Box>
         </CardContent>
+      </Card>
+
+      <Card>
         <CardContent>
           <h1>Employee Data </h1>
           <TableContainer component={Paper}>
@@ -249,7 +284,7 @@ const InfoBox = () => {
                       </TableCell>
                       <TableCell>
                         {calculatePercentage(
-                          employee.numEmailFail,
+                          employee.numEmailFails,
                           employee.numEmailLogs
                         )}
                       </TableCell>
