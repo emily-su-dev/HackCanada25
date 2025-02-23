@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
+import { NextRequest, NextResponse } from 'next/server';
 
 // send message out
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   // parse data
-  const data = request.body;
+  const data = await request.json();
   console.log('Received data:', data);
   const { body, to } = data;
 
