@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../utils/prisma-client";
 
-export async function PATCH(request: NextRequest) {
+export async function GET(request: NextRequest) {
     try {
         // Extract employeeId from URL parameters
         const fullUrl = request.url;
