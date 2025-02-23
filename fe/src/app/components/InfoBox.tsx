@@ -1,13 +1,24 @@
-import { useState } from 'react';
-import { TextField, Button, Box } from '@mui/material';
+import {
+  Box,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+} from '@mui/material';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const InfoBox = () => {
   const [email, setEmployeeEmail] = useState('');
   const [name, setEmployeeName] = useState('');
   const [position, setEmployeePosition] = useState('');
   const [accountId, setAccountId] = useState(null); // state to store accountId
+  const [employees, setEmployees] = useState([]);
 
   const { data: session } = useSession();
   console.log(session);
@@ -32,9 +43,34 @@ const InfoBox = () => {
     }
   }, [session]);
 
+  useEffect(() => {
+    if (accountId) {
+      fetchEmployees();
+    }
+  }, [accountId]);
+
+  const fetchEmployees = async () => {
+    if (!accountId) return;
+
+    try {
+      const response = await fetch(`/api/employee?accountId=${accountId}`, {
+        method: 'GET',
+      });
+      const responseData = await response.json();
+      setEmployees(responseData);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch employees');
+      } else {
+        console.log('Response data:', JSON.stringify(responseData));
+      }
+    } catch (error) {
+      console.error('Error fetching employees!', error);
+    }
+  };
+
   const handleSubmit = async () => {
     const data = { email, name, position, accountId };
-
     try {
       const response = await fetch('/api/employee', {
         method: 'POST',
@@ -57,9 +93,7 @@ const InfoBox = () => {
 
   return (
     <div>
-      <h1>
-        Info on Configuration setup. Need company setup and employee additions
-      </h1>
+      <h1>Insert Employees</h1>
       <Box display="flex" flexDirection="row" gap={2} p={2}>
         <TextField
           label="Employee Email"
@@ -83,8 +117,43 @@ const InfoBox = () => {
           Submit
         </Button>
       </Box>
-      <h1>display of database data</h1>
-    </div>
+
+      <h1>Employee Data </h1>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Employee Email</TableCell>
+              <TableCell>Employee Name</TableCell>
+              <TableCell>Employee Position</TableCell>
+              <TableCell>Failed SMS Tests</TableCell>
+              <TableCell>Failed Call Tests</TableCell>
+              <TableCell>Total SMS Received</TableCell>
+              <TableCell>Total Calls Received</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {employees.length > 0 ? (
+              employees.map((employee) => (
+                <TableRow key={employee.id}>
+                  <TableCell>{employee.email}</TableCell>
+                  <TableCell>{employee.name}</TableCell>
+                  <TableCell>{employee.position}</TableCell>
+                  <TableCell>{employee.numSmsFails}</TableCell>
+                  <TableCell>{employee.numCallFails}</TableCell>
+                  <TableCell>{employee.numSmsLogs}</TableCell>
+                  <TableCell>{employee.numCallLogs}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3}>No employees available</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div> //Use Material UI to display data
   );
 };
 
