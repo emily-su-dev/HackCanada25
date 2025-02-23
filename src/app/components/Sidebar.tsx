@@ -30,11 +30,11 @@ const Sidebar = () => {
         <h2 className={styles.sidebarTitle}>Sinker</h2>
 
         <Image
-          src="/assets/sinkerLogo.png"
+          src="/assets/sinkerLogoDark.png"
           alt="Sinker Logo"
           className={styles.logo} 
-          width={50}
-          height={50}
+          width={60}
+          height={60}
         /> 
       </div>
         
