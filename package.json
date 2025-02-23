@@ -22,6 +22,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "lucide-react": "^0.475.0",
+    "mui": "^0.0.1",
     "next": "14.2.24",
     "next-auth": "^4.24.11",
     "nodemailer": "^6.10.0",

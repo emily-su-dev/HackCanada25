@@ -17,6 +17,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader } from '@mui/material';
+import styles from './InfoBox.module.css';
 
 interface Employee {
   id: string;
@@ -212,7 +213,7 @@ const InfoBox = () => {
     <div className="grid grid-cols-1 md:grid-rows-2 gap-6">
       <Card className="mt-8 p-0">
         <CardHeader className="p-4">
-          <h1>Insert Employees</h1>
+          <h1 className={styles.normalText}>Insert Employees</h1>
         </CardHeader>
         <CardContent className="p-4">
           <Box display="flex" flexDirection="row" gap={2}>
