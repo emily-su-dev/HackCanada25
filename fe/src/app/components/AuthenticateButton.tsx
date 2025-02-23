@@ -1,7 +1,7 @@
 'use client';
 
-import { FC } from 'react';
 import { signIn } from 'next-auth/react';
+import { FC } from 'react';
 
 export const AuthenticateButton: FC = () => {
   const handleGoogleSignIn = async () => {
