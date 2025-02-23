@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from "react";
-import { Button, Container } from "react-bootstrap";
-import styles from "./Home.module.css";
+import { useEffect, useState } from 'react';
+import { Button, Container } from 'react-bootstrap';
+import styles from './Home.module.css';
 import { AuthenticateButton } from './components/AuthenticateButton';
-import Image from "next/image";
+import Image from 'next/image';
 
 const Home = () => {
   const [mounted, setMounted] = useState(false);
@@ -21,13 +21,13 @@ const Home = () => {
     // Trigger fade-out effect before disappearing
     setFade(true);
     setTimeout(() => {
-      setMoved(prevMoved => !prevMoved); // Toggle the moved state
+      setMoved((prevMoved) => !prevMoved); // Toggle the moved state
       setFade(false); // Reset the fade state after the transition
     }, 500); // Delay matches the duration of the fade effect
   };
-  
+
   // Prevent rendering mismatched HTML between server and client
-  if (!mounted) return null;  // Ensure that the page is only rendered on the client
+  if (!mounted) return null; // Ensure that the page is only rendered on the client
 
   return (
     <div className={styles.home}>
@@ -36,29 +36,36 @@ const Home = () => {
           <Image
             src="/assets/sinkerLogo.png"
             alt="Sinker Logo"
-            className={`${styles.logo} ${moved ? styles.movedUp : ""}`} 
+            className={`${styles.logo} ${moved ? styles.movedUp : ''}`}
             onClick={handleMoveContent}
             width={150}
             height={150}
-          /> 
+          />
         </div>
 
-        <h1 
-        className={`${styles.sinkerTitle} ${moved ? styles.movedUp : ""}`} // Toggle class
-        onClick={handleMoveContent}>
+        <h1
+          className={`${styles.sinkerTitle} ${moved ? styles.movedUp : ''}`} // Toggle class
+          onClick={handleMoveContent}
+        >
           Sinker
         </h1>
 
-        {!moved && <p className={`${styles.text} ${moved ? styles.fade : ""}`}>Click our name or logo</p>}
+        {!moved && (
+          <p className={`${styles.text} ${moved ? styles.fade : ''}`}>
+            Click our name or logo
+          </p>
+        )}
         {moved && (
           <>
-            <h1 className={styles.homeTitle}>Cybersecurity Awareness Training</h1>
+            <h1 className={styles.homeTitle}>
+              Cybersecurity Awareness Training
+            </h1>
             <p className={styles.homeSubtitle}>
               Prevent phishing for once and all.
             </p>
           </>
         )}
-        
+
         <AuthenticateButton />
       </Container>
     </div>
@@ -66,4 +73,3 @@ const Home = () => {
 };
 
 export default Home;
-

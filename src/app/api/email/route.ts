@@ -3,7 +3,20 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { email, subject, message } = body;
+  const { employeeId, email, subject, message } = body;
+
+  if (!employeeId || !email || !subject || !message) {
+    return NextResponse.json(
+      { error: 'Missing required fields' },
+      { status: 400 }
+    );
+  }
+
+  // Generate a unique tracking link per employee
+  const trackingLink = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/track/email/${employeeId}`;
+
+  // Append tracking link to the SMS body
+  const messageBody = `${message} Click here: ${trackingLink}`;
 
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -18,7 +31,7 @@ export async function POST(request: Request) {
       from: process.env.SMTP_USER,
       to: email,
       subject: subject,
-      text: message,
+      text: messageBody,
     });
     return NextResponse.json({ success: true });
   } catch (error) {

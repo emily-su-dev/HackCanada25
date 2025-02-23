@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation'; // For current path
 import Sidebar from './components/Sidebar'; // Import the Sidebar component
 import './globals.css';
 import Providers from './providers';
+import { ReactNode } from 'react';
+import Head from 'next/head';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -15,6 +17,25 @@ const geistMono = localFont({
   variable: '--font-geist-mono',
   weight: '100 900',
 });
+
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout = ({ children }: LayoutProps): JSX.Element => {
+  return (
+    <>
+      <Head>
+        <title>Sinker</title>
+        <meta
+          name="description"
+          content="Helping businesses strengthen employee defence against phishing, spam, and suspicious calls"
+        />
+      </Head>
+      {children}
+    </>
+  );
+};
 
 export default function RootLayout({
   children,
@@ -38,7 +59,7 @@ export default function RootLayout({
             style={{ marginLeft: showSidebar ? '250px' : '0', width: '100%' }}
           >
             <Providers>
-              {children} {/* Main content */}
+              <Layout>{children}</Layout> {/* Main content */}
             </Providers>
           </div>
         </div>
