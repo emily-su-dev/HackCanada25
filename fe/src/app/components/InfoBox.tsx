@@ -1,5 +1,5 @@
+import { Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
-import { TextField, Button, Box } from '@mui/material';
 
 const InfoBox = () => {
   const [employeeName, setEmployeeName] = useState('');
@@ -8,7 +8,6 @@ const InfoBox = () => {
 
   const handleSubmit = async () => {
     const data = { employeeName, companyName, employeePosition };
-
     try {
       const response = await fetch('/api/employee', {
         method: 'POST',
@@ -57,8 +56,9 @@ const InfoBox = () => {
           Submit
         </Button>
       </Box>
-      <h1>display of database data</h1>
-    </div>
+
+      <h1>display of database data </h1>
+    </div> //Use Material UI to display data
   );
 };
 
