@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Generate a unique tracking link per employee
-        const trackingLink = `https://${process.env.NEXT_PUBLIC_API_BASE_URL}/api/track/${employeeId}`;
+        const trackingLink = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/track/${employeeId}`;
 
         // Append tracking link to the SMS body
         const messageBody = `${body} Click here: ${trackingLink}`;
