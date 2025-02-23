@@ -33,7 +33,7 @@ const Home = () => {
 
         <h1 className={styles.sinkerTitle}>Sinker</h1>
 
-        <h1 className={styles.homeTitle}>Cybersecurity Simulation Training</h1>
+        <h1 className={styles.homeTitle}>Cybersecurity Simulation Testing</h1>
         <p className={styles.homeSubtitle}>
           Simulating phishing threats - hook, line, and sinker.
         </p>
