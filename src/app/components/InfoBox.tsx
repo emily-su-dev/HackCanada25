@@ -1,4 +1,3 @@
-import React from 'react';
 
 import {
   Box,
@@ -24,16 +23,21 @@ interface Employee {
   email: string;
   name: string;
   position: string;
+  phoneNumber: string;
   numSmsFails: number;
   numCallFails: number;
+  numEmailFail: number;
   numSmsLogs: number;
   numCallLogs: number;
+  numEmailLogs: number;
 }
 
 const InfoBox = () => {
   const [email, setEmployeeEmail] = useState<string>('');
   const [name, setEmployeeName] = useState<string>('');
   const [position, setEmployeePosition] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+
   const [accountId, setAccountId] = useState<string | null>(null); // state to store accountId
   const [employees, setEmployees] = useState<Employee[]>([]);
 
@@ -66,6 +70,11 @@ const InfoBox = () => {
     }
   }, [accountId]);
 
+  useEffect(() => {
+    console.log("Updated Phone Number:", phoneNumber);
+  }, [phoneNumber]);
+  
+
   const fetchEmployees = async () => {
     if (!accountId) return;
 
@@ -87,7 +96,7 @@ const InfoBox = () => {
   };
 
   const handleSubmit = async () => {
-    const data = { email, name, position, accountId };
+    const data = { email, name, position, accountId, phoneNumber};
     try {
       const response = await fetch('/api/employee', {
         method: 'POST',
@@ -180,6 +189,12 @@ const InfoBox = () => {
           variant="outlined"
           value={position}
           onChange={(e) => setEmployeePosition(e.target.value)}
+        />
+        <TextField
+          label="Phone Number"
+          variant="outlined"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
         />
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           Submit
