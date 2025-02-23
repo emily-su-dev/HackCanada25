@@ -13,12 +13,23 @@ import {
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
+interface Employee {
+  id: string;
+  email: string;
+  name: string;
+  position: string;
+  numSmsFails: number;
+  numCallFails: number;
+  numSmsLogs: number;
+  numCallLogs: number;
+}
+
 const InfoBox = () => {
-  const [email, setEmployeeEmail] = useState('');
-  const [name, setEmployeeName] = useState('');
-  const [position, setEmployeePosition] = useState('');
-  const [accountId, setAccountId] = useState(null); // state to store accountId
-  const [employees, setEmployees] = useState([]);
+  const [email, setEmployeeEmail] = useState<string>('');
+  const [name, setEmployeeName] = useState<string>('');
+  const [position, setEmployeePosition] = useState<string>('');
+  const [accountId, setAccountId] = useState<string | null>(null); // state to store accountId
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
   const { data: session } = useSession();
   console.log(session);

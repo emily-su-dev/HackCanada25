@@ -8,7 +8,15 @@ import {
   Legend,
 } from 'recharts';
 
-const PieChartComponent = ({ data, colors }) => (
+interface PieChartComponentProps {
+  data: Array<{ name: string; value: number }>;
+  colors: string[];
+}
+
+const PieChartComponent: React.FC<PieChartComponentProps> = ({
+  data,
+  colors,
+}) => (
   <ResponsiveContainer width="100%" height="100%">
     <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
       <Pie

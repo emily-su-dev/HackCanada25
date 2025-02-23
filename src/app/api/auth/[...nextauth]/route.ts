@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { JWT } from 'next-auth/jwt';
 
 const authOptions = {
   session: {
@@ -16,7 +17,7 @@ const authOptions = {
     }),
   ],
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: JWT }) {
       if (session.user) {
         session.user.email = token.email ?? null; // Attach email to session
         session.user.id = token.accountId ?? null; // Attach user ID to session
@@ -24,7 +25,7 @@ const authOptions = {
       return session;
     },
 
-    async redirect({ url, baseUrl }) {
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       return `${baseUrl}/Dashboard`;
     },
   },

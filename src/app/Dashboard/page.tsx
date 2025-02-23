@@ -22,6 +22,13 @@ interface CustomSession extends Session {
   };
 }
 
+interface StatCardProps {
+  title: string;
+  value: number | string;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+}
+
 const Dashboard = () => {
   const [mounted, setMounted] = useState(false);
   const [accountId, setAccountId] = useState<string | null>(null);
@@ -190,7 +197,12 @@ const Dashboard = () => {
   // Prevent hydration issues
   if (!mounted) return null;
 
-  const StatCard = ({ title, value, icon: Icon, color }) => (
+  const StatCard: React.FC<StatCardProps> = ({
+    title,
+    value,
+    icon: Icon,
+    color,
+  }) => (
     <Card className="w-full">
       <CardContent className="flex items-center p-6">
         <div className={`rounded-full p-3 mr-4 bg-${color}-100`}>

@@ -10,7 +10,11 @@ import {
   Cell,
 } from 'recharts';
 
-const BarChartComponent = ({ data }) => (
+interface BarChartComponentProps {
+  data: Array<{ range: string; count: number }>;
+}
+
+const BarChartComponent: React.FC<BarChartComponentProps> = ({ data }) => (
   <ResponsiveContainer width="100%" height="100%">
     <BarChart data={data} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
       <CartesianGrid strokeDasharray="3 3" />
