@@ -8,43 +8,50 @@
   position: fixed;
   left: 0;
   top: 0;
-  font-family: 'Poppins', sans-serif;
 }
 
 .sidebarTitle {
   padding-top: 30px;
-  font-size: 22px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 80px;
 }
 
 .navItem {
+  display: flex;
+  flex-direction: row; /* Ensure horizontal alignment */
+  align-items: center;
+  gap: 15px; /* Space between icon and text */
+
   color: black !important;
   padding: 12px 15px;
   margin-bottom: 50px;
   height: 100px;
   width: 100%;
-  transition: background 0.3s, color 0.3s;
-  font-size: 25px;
-  display: flex;
-  align-items: center; /* Vertically center text */
-  justify-content: center; /* Horizontally center text and icon */
-  gap: 10px;
-
-  flex-direction: row;
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+.navItem {
+  display: flex !important;
 }
 
+/* Ensure the text doesn't have extra spacing */
+.navItem p {
+  margin: 0;
+  font-size: 17.5px;
+}
 
 /* Hover Effect */
 .navItem:hover {
-  background-color: #4467C4;
+  background-color: #4467c4;
   color: white !important;
 }
 
 /* Active Page Effect */
 .navItem.active {
-  background-color: #4467C4; /* Light blue background for active item */
+  background-color: #4467c4; /* Light blue background for active item */
   color: white !important; /* Ensure text color is white when active */
 }
 
@@ -56,9 +63,10 @@
 
 .navIcon {
   color: black;
+  margin: 0;
+  padding: 0;
 }
 
 .logout {
-  margin-top: auto;
   color: black !important;
 }
